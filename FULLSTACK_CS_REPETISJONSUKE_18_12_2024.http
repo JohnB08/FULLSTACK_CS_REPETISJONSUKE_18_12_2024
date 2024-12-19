@@ -1,0 +1,6 @@
+@FULLSTACK_CS_REPETISJONSUKE_18_12_2024_HostAddress = http://localhost:5244
+
+GET {{FULLSTACK_CS_REPETISJONSUKE_18_12_2024_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

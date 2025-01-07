@@ -13,3 +13,12 @@ Gjennomgang av minstekravet for backend i prosjektoppgaven.<br>
      debugge siden referansen alltid returnerer en gyldig verdi.
 4. Vi så på forskjellen på en standard referanseverdi og en med get; og set; metoder.
 5. Vi testet endepunktene våre i ThunderClient, for å se at de oppfylgte kravene til oppgaven.
+
+
+### Filoplasting 07.01.2025
+
+1. Vi så på hvordan man kan hente filer fra en form request. 
+2. Vi utvidet vår dto modell og vår familie modell til å inkludere en filpath.
+3. Vi så på hvordan vi kan eksponere innholdet i wwwwroot folderen til en api
+4. Vi lagret filer i images folderen i wwwroot folderen vår, og knyttet en referanse til pathen til et bilde til et familieobjekt.
+5. Vi så på html forms, og hvordan hver "name" attributt der er en nøkkel i "form" objektet vi leser ut av httpRequesten vår. 

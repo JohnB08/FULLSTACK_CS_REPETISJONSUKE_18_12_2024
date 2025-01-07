@@ -5,6 +5,8 @@ VisualStudioVersion = 17.5.002.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FULLSTACK_CS_REPETISJONSUKE_18_12_2024", "FULLSTACK_CS_REPETISJONSUKE_18_12_2024.csproj", "{3A21117D-F953-4743-AF62-65CBFFB5D461}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "C#ASSIGNMENT_BUILDER", "..\CS_FULLSTACK_DESEMBER_VALGFRI_OPPGAVE\C#ASSIGNMENT_BUILDER.csproj", "{0A32FD42-207A-418B-A01C-906FEB083FD4}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{3A21117D-F953-4743-AF62-65CBFFB5D461}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3A21117D-F953-4743-AF62-65CBFFB5D461}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3A21117D-F953-4743-AF62-65CBFFB5D461}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0A32FD42-207A-418B-A01C-906FEB083FD4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0A32FD42-207A-418B-A01C-906FEB083FD4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0A32FD42-207A-418B-A01C-906FEB083FD4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0A32FD42-207A-418B-A01C-906FEB083FD4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

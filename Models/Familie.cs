@@ -22,4 +22,6 @@ public class Familie
     public List<string> Preferences { get; set; } = [];
     [JsonPropertyName("allergies")]
     public List<string> Allergies { get; set; } = [];
+    [JsonPropertyName("imageurl")]
+    public string ImageUrlPath {get;set;} = string.Empty;
 }

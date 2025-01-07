@@ -54,7 +54,11 @@ public class Context
         }
         if (dto.Allergies != null && dto.Allergies.Count > 0)
         {
-            familie.Preferences = dto.Allergies;
+            familie.Allergies = dto.Allergies;
+        }
+        if (!string.IsNullOrEmpty(dto.ImageUrlPath))
+        {
+            familie.ImageUrlPath = dto.ImageUrlPath;
         }
         return familie;
     }
@@ -166,6 +170,68 @@ public class Context
         dto.Description = string.IsNullOrEmpty(queryDescription) ? null : queryDescription;
         dto.Preferences = string.IsNullOrEmpty(queryPref) ? null : [.. queryPref.Split(",")];
         dto.Allergies = string.IsNullOrEmpty(queryAll) ? null : [.. queryAll.Split(",")];
+        return dto;
+    }
+
+    public async Task<FamilieDTO> FromForm(HttpRequest req, WebApplicationBuilder builder)
+    {
+        //Vi lager et nytt data transfer objekt.
+        var dto = new FamilieDTO();
+
+        //Vi leser ut formen fra httpRequesten.
+        var form = await req.ReadFormAsync();
+
+        //Vi finner første filen fra formen, som vi forventer å være et bilde.
+        var file = form.Files.FirstOrDefault();
+
+        //Vi finner vår wwwwroot static file folder, og bildefilen som eksisterer der.
+        var folderPath = Path.Combine(builder.Environment.WebRootPath, "./images/");
+
+        //Vi genererer et unikt filnavn til bildet.
+        var uniqueFileName = Path.GetRandomFileName() + file.FileName;
+
+        //Vi lager en referanse til pathen som vår lokale kopi av bildet skal ha. 
+        var filePathUrl = Path.Combine(folderPath + uniqueFileName);
+
+        //Vi åpner en ny "bitstream" som lar oss kopiere bits og metadata fra filen i httpRequesten til vår lokale kopi av filen.
+        using (var fileStream = new FileStream(filePathUrl, FileMode.Create))
+        {
+            //Vi kopierer filen fra httpRequesten til vår nye bildefil.
+            file.CopyTo(fileStream);
+        }
+
+        //Vi går inn i formen og finner verdien bak nøkkelen "count".
+        var queryCount = form["count"].ToString();
+
+        //Vi går inn i formen og finner verdien bak nøkkelen "name".
+        var queryName = form["name"].ToString();
+
+        //Vi går inn i formen og finner verdien bak nøkkelen "description".
+        var queryDescription = form["description"].ToString();
+
+        //vi går inn i formen og finner verdien bak nøkkelen "preferences".
+        var queryPref = form["preferences"].ToString();
+
+        //vi går inn i formen og finner verdien bak nøkkelen "allergies"
+        var queryAll = form["allergies"].ToString();
+
+        //vi definerer dto sin Count property som enten int Countvall, eller null
+        dto.Count = int.TryParse(queryCount, out int countVal) ? countVal : null;
+
+        //Vi definerer dto sin Name som enten null eller queryName
+        dto.Name = string.IsNullOrEmpty(queryName) ? null : queryName;
+
+        //Vi definerer dto sin description som enten null eller queryDescription.
+        dto.Description = string.IsNullOrEmpty(queryDescription) ? null : queryDescription;
+
+        //Her definerer vi preferences som enten null eller som et nytt array med queryPref stringen splittet på kommakarakteren
+        dto.Preferences = string.IsNullOrEmpty(queryPref) ? null : [.. queryPref.Split(",")];
+
+        //her definerer vi allergies som enten null eller som et nytt array med queryAll stringen splittet på kommakarakteren.
+        dto.Allergies = string.IsNullOrEmpty(queryAll) ? null : [.. queryAll.Split(",")];
+
+        //Her lager vi en path som er relativ til wwwroot folderen. Denne kan serene brukes sammen med url til apiet for å hente ut filen. Vi knytter den til ImageUrlPath slik av den kan hentes ut av et family objekt senere.
+        dto.ImageUrlPath = "/images/" + uniqueFileName;
         return dto;
     }
 }

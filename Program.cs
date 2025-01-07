@@ -1,13 +1,26 @@
 using FULLSTACK_CS_REPETISJONSUKE_18_12_2024.Context;
 using FULLSTACK_CS_REPETISJONSUKE_18_12_2024.Models;
+using Microsoft.AspNetCore.Http.HttpResults;
 
 var builder = WebApplication.CreateBuilder(args);
+
 
 // Add services to the container.
 //Vi lager vår instans av Context her.
 var context = new Context();
 
 var app = builder.Build();
+
+//Her lar vi apiet vårt eksponere vår static file folder, default vår wwwroot folder. 
+//Alle folderene og filene som eksisterer her blir tilrettelagt som egne "paths" i vår api. 
+//På samme måte som vi kan mappe forskjellige metoder til paths, som vi gjør under.
+//Får også filer og mapper samme paths.
+
+//f.eks vi kan accesse et bilde som ligger i image mappen via:
+//apiurl/images/image.jpg
+//Dette er også grunnen til at vi kan accesse index.html filen via apiurl/index.html
+app.UseStaticFiles();
+app.UseDefaultFiles();
 
 // Configure the HTTP request pipeline.
 //Her er vår MapGet for å hente en familie basert på id
@@ -44,7 +57,25 @@ app.MapDelete("/api/familie/{id}", (int id) =>
     context.Delete(id);
 });
 
+app.MapPost("/api/upload", async (HttpRequest req) => 
+{
+    //Her bruker vi vår FromForm metode i Context for å hente ut data fra en httpForm for å lage en ny familie, inkludert bilder. 
+    //Her må vi passe inn en referanse til builderen vår slik at vi kan hente ut wwwroot folderen vår fra environmentet.
+    var dto = await context.FromForm(req, builder);
+
+    //Vi bruker så Add metoden vår for å adde et nytt familieobjekt til context via vår dto. 
+    context.Add(dto);
+
+    //Vi returnerer OK. 
+    return Results.Ok();
+
+});
+
 app.UseHttpsRedirection();
+
+//Her forteller vi siden vår å redirekte til staticfilen index.html hvis noen prøver et endepunkt som ikke eksisterer. 
+//Hvis f.eks noen går rett til http://localhost:5244, så blir de redirected til http://localhost:5244/index.html.
+app.MapFallbackToFile("index.html");
 
 app.Run();
 

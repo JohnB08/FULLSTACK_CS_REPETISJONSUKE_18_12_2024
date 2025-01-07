@@ -18,4 +18,5 @@ public class FamilieDTO
     public List<string>? Preferences {get;set;}
     [JsonPropertyName("allergies")]
     public List<string>? Allergies {get;set;}
+    public string? ImageUrlPath {get;set;}
 }
